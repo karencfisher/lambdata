@@ -16,9 +16,8 @@ data structures such as the generated correlation matrix.
 Internally, the data set is maintained as a Python dictionary, with the key being
 the column label, and the value the list of values, e.g.
 
-'''
 {'Column0': [1, 2, 3, 4...], 'Column1': [10, 11, 12, 13...], ...}
-'''
+
 
 *Arguments:*
 
