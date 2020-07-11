@@ -2,7 +2,7 @@
 
 ## statools.tools
 
-##### stattools.tools.DataSet(*self*, data, labels=*None*)
+#### stattools.tools.DataSet(*self*, data, labels=*None*)
 
 Creates a data set object from raw Python arrays or lists of values. Converts
 the data into a Pandas DataFrame object, and calculate basic descriptive
@@ -29,11 +29,11 @@ omitted, the labels of form Column*n* will be generated automatically.
 
 ![](assets/instantiate_example.jpg)
 
-**Methods**
+#### Methods
 
-'''
-DataSet.get_dataframe(*self*)
-'''
+
+**DataSet.get_dataframe(*self*)**
+
 
 Translates the data set into a Pandas DataFrame object.
 
@@ -47,9 +47,8 @@ Pandas DataFrame object
 
 ![](assets/dataframe_example.jpg)
 
-'''
-DataSet.statistics(*self*)
-'''
+
+**DataSet.statistics(*self*)**
 
 Generates basic statistics on the data set: mean, variance, and standard deviation
 of each axis.
@@ -64,9 +63,8 @@ Pandas DataFrame of object.
 
 ![](assets/mvs_example.jpg)
 
-'''
-DataSet.covariance(*self*)
-'''
+
+**DataSet.covariance(*self*)**
 
 Generates a variance/covariance of the data set.
 
@@ -80,9 +78,7 @@ Pandas DataFrame of object.
 
 ![](assets/covariance_example.jpg)
 
-'''
-DataSet.correlation(*self*)
-'''
+**DataSet.correlation(*self*)**
 
 Generates a correlation matrix of the dataset
 
@@ -97,7 +93,7 @@ Pandas DataFrame of object.
 ![](assets/correlation_example.jpg)
 
 
-**Attributes**
+####Attributes
 
 *DataSet.stats* - Basic statistics, as Python dictionary
 

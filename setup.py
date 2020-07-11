@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="lambdata-karen", # the name that you will install via pip
-    version="0.1.0",
+    version="0.1.1",
     author="Karen Fisher",
     author_email="karen-fisher@lambdastudents.com",
     description="A buffet of statistical and other useful functions",
