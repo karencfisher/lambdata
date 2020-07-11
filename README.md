@@ -1,65 +1,108 @@
 # lambdata
 
-## statools.tool
+## statools.tools
 
-#### mvs(data)
+##### stattools.tools.DataSet(*self*, data, labels=*None*)
 
-Calculates the Mean, Variance, and Standard Deviation for a single list of values. 
+Creates a data set object from raw Python arrays or lists of values. Converts
+the data into a Pandas DataFrame object, and calculate basic descriptive
+statistics, including mean, variance, standard deviation, and covariance and
+correlation matrices.
 
-**Arguments**
+Calculations are performed using bare Python, without libraries such as Numpy. 
+Only uses Pandas to create DataFrame outputs. Also provides lower level to
+data structures such as the generated correlation matrix.
 
-*data* - Python list of values
+Internally, the data set is maintained as a Python dictionary, with the key being
+the column label, and the value the list of values, e.g.
 
-**Output**
+'''
+{'Column0': [1, 2, 3, 4...], 'Column1': [10, 11, 12, 13...], ...}
+'''
 
-Returns a Python dictionary containing the mean, variance, and standard deviation of the
-values. 
+*Arguments:*
 
-![](/assets/mvs_example.jpg)
+data - a 2 dimensional 'array' (list) containing two or more lists of values.
 
-#### covariance(data, labels=*None*)
+labels - a list of labels for each array (i.e., column names). Optional: if 
+omitted, the labels of form Column*n* will be generated automatically.
 
-Calculates a variance/covariance matrix for a set of arrays of values. 
+![](assets/instantiate_example.jpg)
 
-**Arguments**
+**Methods**
 
-*data* - List of lists of values. Can be two or more, and lists must be of equal length.
+'''
+DataSet.get_dataframe(*self*)
+'''
 
-*labels* - List of labels for the arrays. Optional (default is *None*).
+Translates the data set into a Pandas DataFrame object.
 
-**Output**
+*Arguments:*
 
-Returns a Pandas dataframe of the variance/covariance matrix.
+None
 
-![](/assets/covariance_example.jpg)
+*Returns:*
 
-#### correlation(data, labels=*None*)
+Pandas DataFrame object
 
-Calculates a correlation matrix (Pearson correlation) for a set of arrays of values. **Arguments**
+![](assets/dataframe_example.jpg)
 
-*data* - List of lists of values. Can be two or more, and lists must be of equal length.
+'''
+DataSet.statistics(*self*)
+'''
 
-*labels* - List of labels for the arrays. Optional (default is *None*).
+Generates basic statistics on the data set: mean, variance, and standard deviation
+of each axis.
 
-**Output**
+*Arguments:*
 
-Returns a Pandas dataframe of the correlation matrix.
+None
 
-![](/assets/correlation_example.jpg)
+*Returns*
 
-#### chi_2(data, labels=*None*)
+Pandas DataFrame of object. 
 
-Constructs a crosstab table for two equal length data lists, and obtains chi square score
-an p-value. 
+![](assets/mvs_example.jpg)
 
-**Arguments**
+'''
+DataSet.covariance(*self*)
+'''
 
-*data* - List of lists of values. Must be two lists of values, and they must be of equal length.
+Generates a variance/covariance of the data set.
 
-*labels* - List of labels for the arrays for the crosstab output. Optional (default is *None*).
+*Arguments:*
 
-**Output**
+None
 
-Returns a list containing a Pandas dataframe of the crosstab table, chi-square stastic, and the corresponding p-value.
+*Returns*
 
-![](/assets/chi2_example.jpg)
+Pandas DataFrame of object. 
+
+![](assets/covariance_example.jpg)
+
+'''
+DataSet.correlation(*self*)
+'''
+
+Generates a correlation matrix of the dataset
+
+*Arguments:*
+
+None
+
+*Returns*
+
+Pandas DataFrame of object. 
+
+![](assets/correlation_example.jpg)
+
+
+**Attributes**
+
+*DataSet.stats* - Basic statistics, as Python dictionary
+
+*DataSet.cov_matrix* - The raw generated covariance matrix as Python nested lists
+
+*DataSet.cor_matrix* - Raw generated correlation matrix as Python nested lists
+
+

@@ -173,8 +173,8 @@ if __name__ == '__main__':
     customers = [127, 80, 105, 92, 120, 115, 93]
 
     # Instantiate
-    #data = DataSet([sales, customers], ['sales', 'customers'])
-    data = DataSet([sales, customers])
+    data = DataSet([sales, customers], ['sales', 'customers'])
+    #data = DataSet([sales, customers])
 
     # Test case 1 -- Try getting dataframe
     print('Get dataframe')
