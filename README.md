@@ -2,7 +2,7 @@
 
 ## statools.tools
 
-#### stattools.tools.DataSet(*self*, data, labels=*None*)
+### stattools.tools.DataSet(*self*, data, labels=*None*)
 
 Creates a data set object from raw Python arrays or lists of values. Converts
 the data into a Pandas DataFrame object, and calculate basic descriptive
@@ -28,7 +28,7 @@ omitted, the labels of form Column*n* will be generated automatically.
 
 ![](assets/instantiate_example.jpg)
 
-#### Methods
+## Methods
 
 
 **DataSet.get_dataframe(*self*)**
@@ -92,7 +92,7 @@ Pandas DataFrame of object.
 ![](assets/correlation_example.jpg)
 
 
-####Attributes
+## Attributes
 
 *DataSet.stats* - Basic statistics, as Python dictionary
 
