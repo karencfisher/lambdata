@@ -15,13 +15,14 @@ class ConfusionMatrix():
     generates a confusion matrix.
     '''
 
-    def __init__(self, y_true, y_predict):
+    def __init__(self, y_true, y_predict, labels=None):
         '''
         Constructor
 
         Arguments:
             y_true -- ground truth
             y_predict -- model output
+            labels -- class labels (optional)
 
         Exceptions:
             None
@@ -29,9 +30,12 @@ class ConfusionMatrix():
         self.y_true = y_true
         self.y_predict = y_predict
 
-        # Get all unique class labels in each y_true and y_predict,
-        #  even if not in both sets
-        self.labels_ = list(set(y_true).union(set(y_predict)))
+        if labels == None:
+            # Get all unique class labels in each y_true and y_predict,
+            #  even if not in both sets
+            self.labels_ = list(set(y_true).union(set(y_predict)))
+        else:
+            self.labels_ = labels
 
         # Generate the confusion and matrix as instance attribute
         self.confusion_matrix = confusion_matrix(self.y_true,
@@ -181,3 +185,46 @@ class MultiClassROC():
     
 
         
+if __name__ == '__main__':
+
+    # Implement a basic unit test.
+
+    from sklearn.datasets import load_iris
+    from sklearn.tree import DecisionTreeClassifier
+    from sklearn.model_selection import train_test_split
+    from IPython.display import display
+
+    # Load the Iris data set from sklearn
+    print('Loading iris data...')
+    labels = ['setosa', 'versicolor', 'virginica']
+    iris = load_iris()
+    X = iris.data[:, :2]
+    y = iris.target
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=.2, 
+                                                        random_state=42)
+    
+    # Fit a decision tree to it and predict test data
+    print('Building a decision tree...')
+    model = DecisionTreeClassifier()
+    model.fit(X_train, y_train)
+    y_predict = model.predict(X_test)
+    print(f'Accuracy = {model.score(X_test, y_test) * 100} %')
+
+    # Try confusion matrix object
+    print('\nGenerate confusion matrix...')
+    confusion = ConfusionMatrix(y_test, y_predict)
+    display(confusion.get_confusion_matrix())
+    print('\nGenerate metrics...')
+    display(confusion.get_metrics())
+
+    # Try the ROC plot
+    print('\nGenerate ROC curves...')
+    roc = MultiClassROC(model, X_test, y_test)
+    roc.fit_ROC()
+    roc.plot_ROC()
+
+    print('Success')
+
+
+
+
