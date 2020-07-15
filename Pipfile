@@ -12,6 +12,7 @@ numpy = "*"
 pandas = "*"
 scipy = "*"
 ipython = "*"
+matplotlib = "*"
 
 [requires]
 python_version = "3.7"

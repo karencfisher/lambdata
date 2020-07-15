@@ -2,21 +2,27 @@ import pandas as pd
 
 
 class DataSet():
+    '''
+    Maintains a data set given simple arrays or lists of values, and
+    provides basic statistics, including covariance and correlation
+    matrices.
+    '''
     def __init__(self, data, labels=None):
         '''
-        Class initialization
+        Class constructor
 
         Args:
-        data - 2 dimensional Python array (list). List of lists of
-               values.
-        labels - list of column headings. Optional.
+            data - 2 dimensional Python array (list). List of lists of
+            values.
+
+            labels - list of column headings. Optional.
 
         Returns:
-        None
-
-        Creates a dictionary in form
+            dictionary of the data set in the form of
             {column-name: [values]}
 
+        Exceptions:
+            ValueError if input is invalid
         '''
         # Validate user input. 
         try:
@@ -41,10 +47,10 @@ class DataSet():
         Calculate mean, variance, and standard deviation for an array.
 
         Args:
-        data - an 'array' (list) of values
+            data - an 'array' (list) of values
 
         Returns:
-        dictionary with mean, variation, and standard deviation
+            dictionary with mean, variation, and standard deviation
         '''
         # size of array and mean
         n = len(data)
@@ -66,11 +72,11 @@ class DataSet():
         Calculate covariance for two arrays.
 
         Args:
-        ColA - an 'array' (list) of values
-        ColB - an 'array' (list) of values
+            ColA - an 'array' (list) of values
+            ColB - an 'array' (list) of values
 
         Returns:
-        Covariance 
+            Covariance 
         '''
         assert len(colA) == len(colB), 'Arrays of unequal length'
 
@@ -87,11 +93,11 @@ class DataSet():
         Calculate correlation coefficient for two arrays.
 
         Args:
-        ColA - an 'array' (list) of values
-        ColB - an 'array' (list) of values
+            ColA - an 'array' (list) of values
+            ColB - an 'array' (list) of values
 
         Returns:
-        Correlation coefficient
+            Correlation coefficient
         '''
         assert len(colA) == len(colB), 'Arrays of unequal length'
 
