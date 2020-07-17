@@ -24,12 +24,17 @@ class DataSet():
         Exceptions:
             ValueError if input is invalid
         '''
-        # Validate user input. 
+        # Validate user input. Should be list of at least 2 lists.
         try:
-            if len(data) == 1 or len(data[0]) == 1:
+            if len(data) == 1:
                 raise ValueError('Input should be two dimensional list')
         except TypeError:
             raise ValueError('Input should be two dimensional list')
+
+        first_length = len(data[0])
+        for array in data[1:]:
+            if len(array) != first_length:
+                raise ValueError('Input arrays should be of same length')
             
         # If labels None, create labels of list form Columni
         if labels == None:
@@ -78,7 +83,8 @@ class DataSet():
         Returns:
             Covariance 
         '''
-        assert len(colA) == len(colB), 'Arrays of unequal length'
+        assert len(colA) == len(colB), \
+            f'Arrays are of unequal length ({len(colA), len(colB)}'
 
         meanA = self.__mvs(colA)['mean']
         meanB = self.__mvs(colB)['mean']
@@ -99,7 +105,8 @@ class DataSet():
         Returns:
             Correlation coefficient
         '''
-        assert len(colA) == len(colB), 'Arrays of unequal length'
+        assert len(colA) == len(colB), \
+            f'Arrays are of unequal length ({len(colA), len(colB)}'
 
         covar = self.__covar(colA, colB)
 

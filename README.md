@@ -2,6 +2,12 @@
 
 ## statools.tools
 
+### Installation
+
+Currently, 
+
+pip install -i https://test.pypi.org/simple/ lambdata-karen
+
 ### stattools.tools.DataSet(*self*, data, labels=*None*)
 
 Creates a data set object from raw Python arrays or lists of values. Converts
@@ -99,5 +105,18 @@ Pandas DataFrame of object.
 *DataSet.cov_matrix* - The raw generated covariance matrix as Python nested lists
 
 *DataSet.cor_matrix* - Raw generated correlation matrix as Python nested lists
+
+
+## statools.metrics
+
+### statools.metrics.ConfusionMatrix(*self*, y_true, y_predict, labels=*None*)
+
+Constructs a confusion matrix for two or more classes. Provides also for precision,
+recall, and F1 scores for each class. Works for multinomial classes.
+
+### statools.metrics.MultiClassROC(*self*, X, y, classes=*None*)
+
+This class essentially extends the ROC curve to work with multiple classes. It calculates
+a curve for each class, as if a single binary class, and can plot them all on a single figure.
 
 
