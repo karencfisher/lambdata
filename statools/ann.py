@@ -11,7 +11,7 @@ Each object has two methods:
 
 class Sigmoid():
     def g(self, z):
-        return 1 / (1 + np.exp(z))
+        return 1 / (1 + np.exp(-z))
     
     def dg(self, z):
         self.g(z) * (1 - self.g(z))
@@ -27,10 +27,10 @@ class Tanh():
 
 class Relu():
     def g(self, z):
-        return max((0, z))
+        return np.maximum(z, 0)
 
     def dg(self, z):
-        return 0 if z < 0 else 1
+        return (z >= 0) * 1
 
 
 '''
@@ -39,9 +39,8 @@ class Relu():
 
 def binary_crossentropy(A, Y):
     m = Y.shape[1]
-    logprobs = np.multiply(np.log(A), Y) + \
-        np.multiply(np.log(1 - A), (1 - Y))
-    cost = -1/m * np.sum(logprobs)
+    cost = -1/m * np.sum(np.dot(Y, np.log(A).T) + np.dot((1-Y), 
+                         np.log(1 - A).T))
     return np.squeeze(cost)
 
 
@@ -153,9 +152,9 @@ class ANN():
 
             # Map outputs
             if self.layers[-1].units > 1:
-                y_hat = [np.argmax(A[i]) for i in range(len(A))]
+                y_hat = [np.argmax(A[j]) for j in range(len(A))]
             else:
-                y_hat = (A > 0.5)
+                y_hat = (A > 0.5) * 1
 
             # Calculate loss and accuracy
             loss = self.loss(A, y)
@@ -205,7 +204,7 @@ if __name__ == '__main__':
     clf.add_layer(5, Tanh)
     clf.add_layer(1, Sigmoid)
 
-    clf.fit(X_train, y_train, 200, verbose=10)
+    clf.fit(X_train, y_train, 1000, verbose=100)
 
     # plot scores over epochs
     plt.plot(clf.losses, label='loss')
