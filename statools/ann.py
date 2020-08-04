@@ -14,7 +14,7 @@ class Sigmoid():
         return 1 / (1 + np.exp(-z))
     
     def dg(self, z):
-        self.g(z) * (1 - self.g(z))
+        return self.g(z) * (1 - self.g(z))
 
     
 class Tanh():
@@ -48,6 +48,10 @@ def categorical_crossentropy(A, Y):
     pass
 
 
+'''
+---------------------------------- Layer object --------------------
+'''
+
 class Layer():
     def __init__(self, units, activation, learning_rate, 
                  input_shape=None, input_layer=None, 
@@ -56,10 +60,14 @@ class Layer():
         self.activation = activation()
         self.learning_rate = learning_rate
         self.input_shape = input_shape
+
+        # Pointers to previous/next layers
         self.input_layer = input_layer
         self.output_layer = output_layer
-
+        
         self.m = input_shape[1]
+
+        # Initialize parameters
         self.Weights = np.random.randn(self.units, 
                                        self.input_shape[0]) * 0.01
         self.bias = np.zeros((self.units, 1))
@@ -68,28 +76,34 @@ class Layer():
         self.X = X
         self.Z = np.dot(self.Weights, self.X) + self.bias
         self.A = self.activation.g(self.Z)
+
         if self.output_layer is not None:
             self.output_layer.forward(self.A)
         return
 
-    def back(self, dZ):
-        if self.output_layer is None:
-            self.dZ = dZ
-        else:
-            self.dZ = np.dot(self.output_layer.prev_weights.T, dZ)
-            self.dZ *= self.activation.dg(self.Z)
-
+    def back(self, dA):
+        # Calculate gradients
+        self.dZ = dA * self.activation.dg(self.Z)
         self.dW = 1/self.m * np.dot(self.dZ, self.X.T)
         self.db = 1/self.m * np.sum(self.dZ, axis=1, keepdims=True)
 
-        self.prev_weights = np.copy(self.Weights)
+        # Update parameters
         self.Weights -= self.learning_rate * self.dW
         self.bias -= self.learning_rate * self.db
 
         if self.input_layer is not None:
-            self.input_layer.back(self.dZ)
+            # Calculate dA for previous layer
+            dA_previous = np.dot(self.Weights.T, self.dZ)
+
+            # Propagate back to previous layer
+            self.input_layer.back(dA_previous)
+
         return
+
         
+'''
+-------------------------------- ANN Object ------------------------
+'''
 
 class ANN():
     '''
@@ -168,8 +182,8 @@ class ANN():
                     print(f'Epoch {i} Loss {loss} Accuracy {accuracy}')
 
             # Begin back propagation
-            dZ = A - y
-            self.layers[-1].back(dZ)   
+            dA = - (np.divide(y, A) - np.divide(1 - y, 1 - A))
+            self.layers[-1].back(dA)   
 
     def predict(self, X):
         # Feed forward
